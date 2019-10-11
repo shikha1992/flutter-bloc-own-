@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:flutter_app/storage/sharedpref.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'BlocProvider.dart';
 
@@ -26,10 +27,13 @@ class ApplicationBloc implements BlocBase {
 
 
   Future<String> checkIsLogin() async {
-    String _token = "";
-//    _token = SharedPreferencesHelper.getLanguageCode() as String;
+    String _token  ;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+//     ?? '';
+    _token =  prefs.getString("userid") ?? 'jj' ;
     if (_token != "" && _token != null) {
-      _locationController.sink.add("test");
+      _locationController.sink.add(_token);
     }else{
       _locationController.sink.add("hh");
     }
